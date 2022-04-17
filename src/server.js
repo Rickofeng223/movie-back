@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import controllers from './controllers/index.js'
 import session from "express-session";
+import sessionController  from "./controllers/sessions/index.js";
 
 const express_app = ()=> {
     const app = express();
@@ -22,7 +23,7 @@ const express_app = ()=> {
     const sess = {
         resave: false,
         saveUninitialized: true,
-        secret: process.env.SECRET,
+        secret: process.env.SECRET||"secret",
         cookie: {secure: false}
     };
     if (process.env.ENV === 'production') {
@@ -30,16 +31,12 @@ const express_app = ()=> {
         sess.cookie.secure = true;
     }
     app.use(session(sess));
-
-    // sessionController(app)
-
-
-
-
-
+    sessionController(app)
 
     const PORT = process.env.PORT || 4000
     return app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 }
+
+
 
 export default express_app
