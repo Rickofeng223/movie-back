@@ -10,7 +10,13 @@ const usersSchema = mongoose.Schema({
 
     last_name: {type: String, required: true},
 
-    reviews: {type: Schema.Types.ObjectId, ref: "Review"} // ReviewID
+    email_id: {type: String},
+
+    phone_no:{type: String},
+
+    DOB: {type: Date}
+
+    // reviews: {type: Schema.Types.ObjectId, ref: "Review"} // ReviewID
 
     });
 
