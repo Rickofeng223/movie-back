@@ -2,26 +2,28 @@ import mongoose from "mongoose";
 
 const moviesSchema = mongoose.Schema({
 
-    tmdb_id: {type: Number},
+    imdb_id: {type: Number}, //Api
 
-    title: {type: String},
+    tmdb_id: {type: Number}, //Api
 
-    homepage: {type: String},
+    title: {type: String}, //Api
 
-    release_date: {type: String},
+    homepage: {type: String}, //Api
 
-    overview: {type: String},
+    release_date: {type: String}, //Api
 
-    poster_path: {type: String},
+    overview: {type: String}, //Api
+
+    poster_path: {type: String}, //Api
 
     genres: {
-        g_id: Number,
-        g_name: String
+        g_id: Number, //Api
+        g_name: String //Api
     },
 
-    vote_average: Number,
+    vote_average: Number
 
-    reviews: {type: Schema.Types.ObjectId, ref: "Review"} // ReviewID
+    // reviews: {type: Schema.Types.ObjectId, ref: "Review"} // ReviewID
 
 });
 
