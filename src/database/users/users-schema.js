@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import Phone from 'mongoose-type-phone'
-import Email from 'mongoose-type-email'
 
 const usersSchema = mongoose.Schema({
 
