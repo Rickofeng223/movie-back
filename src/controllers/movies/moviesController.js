@@ -1,18 +1,25 @@
+import {movieDao as dao} from '../../db.js'
 
 const getMovie = async (req, res) => {
     const id = req.params.id
-    console.log("GET:", id ? "id=" + id : '')
-
-    res.json(id ? {_id: id} : {all: []})
+   let findBy
+    if(id){
+       findBy = await dao.findById(id)
+   }
+    else{
+        findBy = await dao.findAll( )
+    }
+    res.json(findBy)
 }
 const removeMovie = async (req, res) => {
-    const id = req.params.id
-    if (!id) {
+    const _id = req.params.id
+    if (!_id) {
         res.sendStatus(400)
         return
     }
-    console.log("Delete: ", id)
-    res.json({_id: id})
+      await dao.deleteOne({_id})
+
+     res.sendStatus(200 )
 }
 
 const updateMovie = async (req, res) => {
@@ -21,27 +28,30 @@ const updateMovie = async (req, res) => {
         res.sendStatus(400)
         return
     }
-    console.log("Update: ", id)
-    res.json({_id: id,...req.body})
+    try {
+        const result = await dao.updateByID(id, req.body)
+        res.sendStatus(200)
+
+    } catch (e) {
+        res.sendStatus(500)
+    }
 }
 const createMovie = async (req, res) => {
     const body = req.body
     if (!body) {
         res.sendStatus(400)
-        console.log("Post Error: No Body")
 
         return
     }
-    const _body = {_id: Date.now().toString(), ...body}
-    console.log("Post: Body", _body)
+    const created = await dao.create(body)
 
-    res.json(_body)
+    res.json(created)
 }
 
- export default (app) => {
-     app.post('/api/movies', createMovie);
-     app.get('/api/movies', getMovie);
-     app.get('/api/movies/:id',  getMovie);
-     app.put('/api/movies/:id',  updateMovie);
-     app.delete('/api/movies/:id',  removeMovie);
- }
+export default (app) => {
+    app.post('/api/movies', createMovie);
+    app.get('/api/movies', getMovie);
+    app.get('/api/movies/:id', getMovie);
+    app.put('/api/movies/:id', updateMovie);
+    app.delete('/api/movies/:id', removeMovie);
+}

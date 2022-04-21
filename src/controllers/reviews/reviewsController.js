@@ -1,9 +1,16 @@
+import {reviewDao as dao} from '../../db.js'
 
 const getReview = async (req, res) => {
-    const id = req.params.id
-    console.log("GET:", id ? "id=" + id : '')
+    const _id = req.params.id
+    let rv
+    if (_id) {
+        rv = await dao.findById(_id)
+    } else {
+        rv = await dao.findAll()
+    }
+    res.json(rv)
 
-    res.json(id ? {_id: id} : {all: []})
+
 }
 const removeReview = async (req, res) => {
     const id = req.params.id
@@ -11,19 +18,24 @@ const removeReview = async (req, res) => {
         res.sendStatus(400)
         return
     }
-    console.log("Delete: ", id)
-    res.json({_id: id})
+    await  dao.deleteByID(id )
+    res.sendStatus(200)
 }
 
 const updateReview = async (req, res) => {
-    const id = req.params.id
+     const id = req.params.id
     if (!id) {
+ 
         res.sendStatus(400)
         return
     }
-    console.log("Update: ", id)
-    res.json({_id: id,...req.body})
+ 
+    await dao.updateByID(id,req.body)
+ 
+    res.sendStatus(200)
 }
+
+
 const createReview = async (req, res) => {
     const body = req.body
     if (!body) {
@@ -32,16 +44,15 @@ const createReview = async (req, res) => {
 
         return
     }
-    const _body = {_id: Date.now().toString(), ...body}
-    console.log("Post: Body", _body)
 
-    res.json(_body)
+    res.json(await dao.create(body))
+
 }
 
- export default (app) => {
-     app.post('/api/reviews', createReview);
-     app.get('/api/reviews', getReview);
-     app.get('/api/reviews/:id',  getReview);
-     app.put('/api/reviews/:id',  updateReview);
-     app.delete('/api/reviews/:id',  removeReview);
- }
+export default (app) => {
+    app.post('/api/reviews', createReview);
+    app.get('/api/reviews', getReview);
+    app.get('/api/reviews/:id', getReview);
+    app.put('/api/reviews/:id', updateReview);
+    app.delete('/api/reviews/:id', removeReview);
+}
