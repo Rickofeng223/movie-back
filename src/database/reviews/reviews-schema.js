@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-
 const reviewsSchema = mongoose.Schema({
 
-    movie: {type: Schema.Types.ObjectId, ref: "Movie"}, // MovieID
+    movie: {type: mongoose.Schema.Types.ObjectId, ref: "Movie"}, // MovieID
 
-    user: {type: Schema.Types.ObjectId, ref: "User"}, // UserID
+    user: {type: mongoose.Schema.Types.ObjectId, ref: "User"}, // UserID
 
     content: {type: String},
 

@@ -21,7 +21,6 @@ function generateURL(rest,query){
 
 const get = (rest,query)=>GET (generateURL (rest,query))
 
-
 const discover =  (query)=> get('/discover/movie',query)
 const discoverTV =  (query)=> get('/discover/movie',query)
 

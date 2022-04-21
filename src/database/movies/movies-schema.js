@@ -16,17 +16,17 @@ const moviesSchema = mongoose.Schema({
 
     poster_path: {type: String}, //Api
 
-    genres: {
-        g_id: Number, //Api
-        g_name: String //Api
-    },
+
+    genre_ids: {type : Array},
+    // genres: {
+    //     g_id: Number, //Api
+    //     g_name: String //Api
+    // },
 
     vote_average: Number
 
-    // reviews: {type: Schema.Types.ObjectId, ref: "Review"} // ReviewID
 
 });
 
-// , {collection: 'movies'} (not sure yet)
 
 export default moviesSchema;
