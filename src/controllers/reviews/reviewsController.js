@@ -13,6 +13,7 @@ const getReview = async (req, res) => {
 
 }
 import  * as usersDao from '../../database/users/users-dao.js'
+import * as reviewsDao from '../../database/reviews/reviews-dao.js'
 import reviewsModel from "../../database/reviews/reviews-model.js";
 const removeReview = async (req, res) => {
     const id = req.params.id
@@ -22,6 +23,7 @@ const removeReview = async (req, res) => {
     console.log(find)
     if(find.length){
         await  dao.deleteByID(id )
+        res.sendStatus(200)
     }else{
         res.sendStatus(400)
 
