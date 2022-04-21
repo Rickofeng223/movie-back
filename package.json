@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "mocha",
+    "test": "mocha test/test.js",
     "db-drop": "node src/database/data/drop.js",
     "db-init": "node src/database/data/init.js",
     "data-reset": "node src/database/data/reset.js"
