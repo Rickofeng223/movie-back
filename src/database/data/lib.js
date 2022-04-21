@@ -8,6 +8,7 @@ export const rand = (max) => Math.floor(Math.random() * max);
 export const createUser = () => {
     const user = dummy(db.userModel)
     delete user._id
+    user.role ="USER"
     return user
 }
 

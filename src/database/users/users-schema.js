@@ -12,7 +12,9 @@ const usersSchema = mongoose.Schema({
 
     phone_no: {type: String},
 
-    DOB: {type: Date}
+    DOB: {type: Date},
+
+    role:{type: String}
 
 });
 
