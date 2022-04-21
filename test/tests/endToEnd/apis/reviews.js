@@ -1,10 +1,11 @@
 import * as data from "../../../fixtures/db/db-data.js";
 import {assert} from "chai";
 import * as db from "../../../../src/db.js";
-import {request} from "../util.js";
+import {request} from "../util/util.js";
 import dummy from "mongoose-dummy";
+
 const reviews = request('reviews')
-export default function test()  {
+export default function test() {
 
     it('reviews - get all', async () => {
         const get = await reviews.get()
@@ -36,13 +37,8 @@ export default function test()  {
         resp2.data.should.be.eql(resp1.data)
 
 
-
-
-
-
     })
     it('reviews - create', async () => {
-
 
 
         const mock = dummy(db.reviewModel, {})
@@ -50,7 +46,6 @@ export default function test()  {
         delete mock.__v
         const res = await reviews.post(mock)
         const {data} = res
-        console.log(data)
         const get = await reviews.get(data._id)
         let d2 = get.data
         data.should.eql(d2)
@@ -59,25 +54,16 @@ export default function test()  {
     it('reviews - delete', async () => {
 
 
-        let i = 0;
         const war_review = await reviews.get(data.war_review._id)
         const wd = war_review.data
-        console.log(i++)
         await reviews.delete(data.war_review._id)
-        console.log(i++)
         const result = await db.reviewModel.find({_id: data.war_review._id})
-        console.log(i++)
         result.should.be.empty
-        console.log(i++)
         result.should.be.empty;
-        console.log(i++)
         await db.reviewModel.create({_id: data.war_review._id, ...data.war_review})
-        console.log(i++)
 
         const getit = await reviews.get(data.war_review._id)
-        console.log(i++)
         getit.data.should.be.eql(wd)
-        console.log(i++)
 
     })
 }

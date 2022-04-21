@@ -11,7 +11,6 @@ const {log, error: err} = console
 args.url = args.url || `http://localhost:4000`
 args.should.have.property('api')
 const requestUrl = `${args.url}${args.api}/${args.id}`
-console.log(requestUrl)
 ;(async () => {
 
     const response = await axios.delete(requestUrl)

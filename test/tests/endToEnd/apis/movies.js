@@ -1,7 +1,7 @@
 import * as data from "../../../fixtures/db/db-data.js";
 import dummy from "mongoose-dummy";
 import * as db from "../../../../src/db.js";
-import {request} from "../util.js";
+import {request} from "../util/util.js";
 const movies = request('movies')
 
 export default         () => {
@@ -30,7 +30,6 @@ export default         () => {
         res.should.have.property('poster_path')
         res.should.have.property('vote_average')
         res.should.have.property('_id')
-        console.log(res, data.spiderman)
         res.should.eql({__v: 0, ...data.spiderman})
         res._id.toString().should.eql(data.spiderman._id)
     })
@@ -49,7 +48,6 @@ export default         () => {
         delete mock.__v
         const res = await movies.post(mock)
         const {data} = res
-        console.log(data)
         const get = await movies.get(data._id)
         let d2 = get.data
         data.should.eql(d2)

@@ -1,45 +1,13 @@
-import * as db from '../../../src/db.js'
-import * as data from '../../fixtures/db/db-data.js'
-
-import {movieTests, userTests, reviewTests,joinTests} from './apis/index.js'
-
-import {assert} from 'chai'
+import * as db from '../../../../src/db.js'
+import * as data from '../../../fixtures/db/db-data.js'
 
 
-/*
+import userTests from './users.js'
+import movieTests from './movies.js'
+import reviewTests from './reviews.js'
+import joinTests from './joins.js'
 
-//reviews
-res.should.have.property('movie')
-res.should.have.property('user')
-res.should.have.property('content')
-res.should.have.property('likes')
-res.should.have.property('dislikes')
-res.should.have.property('visibility')
-res.should.have.property('_id')
-
-//mvoies
-res.should.have.property('tmdb_id')
-res.should.have.property('title')
-res.should.have.property('homepage')
-res.should.have.property('release_date')
-res.should.have.property('overview')
-res.should.have.property('poster_path')
-res.should.have.property('vote_average')
-res.should.have.property('_id')
-
-
-// users
-res.should.have.property('username')
-res.should.have.property('first_name')
-res.should.have.property('last_name')
-res.should.have.property('email_id')
-res.should.have.property('phone_no')
-res.should.have.property('DOB')
-res.should.have.property('__v')
-res.should.have.property('_id')
-*/
-
-function tests(){
+function tests() {
 
     beforeEach(async () => {
 

@@ -27,7 +27,8 @@ export const spiderman=
             28
         ],
         "vote_average": 7.1,
-        "_id": "69999cc08c4b8c1a2a36c9df"
+        "_id": "69999cc08c4b8c1a2a36c9df",
+        __v:0
     }
     export const war_review=  {
     "movie": "69999cc08c4b8c1a2a36c9df",
@@ -60,7 +61,8 @@ export    const spider_review= {
     "likes": 72,
     "dislikes": 44,
     "visibility": "Monte_Crona91",
-    "_id": "625dc88150fa5dc478985bdd"
+    "_id": "625dc88150fa5dc478985bdd",
+    __v:0
 }
 export const user= {
     "username": "Melissa50",

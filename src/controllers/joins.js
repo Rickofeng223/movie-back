@@ -31,7 +31,6 @@ async function reviewsByUser(req,res){
 	   res.send(reviews)
 }
 async function moviesReviewedByUser(req,res){
-console.log(req.params.id)
  	   const movies = await   dao.moviesFromUserJoinReviews( req.params.id)
 	   res.send(movies)
 }

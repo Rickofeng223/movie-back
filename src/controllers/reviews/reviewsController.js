@@ -40,8 +40,6 @@ const createReview = async (req, res) => {
     const body = req.body
     if (!body) {
         res.sendStatus(400)
-        console.log("Post Error: No Body")
-
         return
     }
 

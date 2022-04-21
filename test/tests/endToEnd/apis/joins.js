@@ -4,10 +4,7 @@ import * as data from '../../../fixtures/db/db-data.js'
 
 const get = axios.get
 import {url} from '../../../../src/server.js'
-import {spiderman} from "../../../fixtures/db/db-data.js";
-import {should} from "chai";
 
-should()
 export default () => {
     it('movies rated by user', async () => {
         const req = await get(`${url}/api/movies/${data.user._id}/users`)
@@ -26,13 +23,14 @@ export default () => {
     })
     it('reviews by user', async () => {
         const req = await get(`${url}/api/reviews/${data.user._id}/users`)
-        console.log(req.data)
-        assert.fail("TODO join ratings by user")
+        const [a, b] = req.data
+        a.should.eql(data.war_review)
+        b.should.eql(data.spider_review)
     })
     it('reviews of movie', async () => {
         const req = await get(`${url}/api/reviews/${data.spiderman._id}/movies`)
-        console.log(req.data)
-        // console.log(this)
-        assert.fail("TODO join ratings of movie")
+        const [review] = req.data
+        review.should.be.eql(data.spider_review)
+
     })
 }

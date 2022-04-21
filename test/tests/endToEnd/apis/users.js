@@ -1,7 +1,7 @@
 import * as data from "../../../fixtures/db/db-data.js";
 import dummy from "mongoose-dummy";
 import * as db from "../../../../src/db.js";
-import {request} from "../util.js";
+import {request} from "../util/util.js";
 const users = request('users')
 
 export default   () => {
@@ -21,7 +21,6 @@ export default   () => {
     })
     it('users - get one', async () => {
         const result = await users.get(data.user._id)
-        console.log(result)
         const res = result.data
         res.should.have.property('username')
         res.should.have.property('first_name')
