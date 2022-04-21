@@ -1,5 +1,8 @@
 import movieModel from "./movies-model.js";
 
+export const findByTID =     (tmdb_id)=> movieModel.find({tmdb_id})
+
+
 // define and export CRUD operations here
 
 

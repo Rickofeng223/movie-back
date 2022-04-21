@@ -1,7 +1,6 @@
 import axios from 'axios'
 const GET =axios.get
 const API_PREFIX='https://api.themoviedb.org/3'
-
 const API_KEY =process.env.MOVIE_API_KEY
 
 const API_QueryString = `api_key=${API_KEY}`
