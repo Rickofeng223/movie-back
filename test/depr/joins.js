@@ -1,9 +1,9 @@
 import {assert} from "chai";
 import axios from 'axios'
-import * as data from '../../../fixtures/db/db-data.js'
+import * as data from '../fixtures/db/db-data.js'
 
 const get = axios.get
-import {url} from '../../../../src/server.js'
+import {url} from '../../src/server.js'
 
 export default () => {
     it('movies rated by user', async () => {

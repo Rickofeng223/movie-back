@@ -1,13 +1,12 @@
-import mongoose from "mongoose";
 import * as db from '../../src/db.js'
+import {connection, movieModel, reviewModel, userModel} from '../../src/db.js'
 import * as data from '../fixtures/db/db-data.js'
+import {expect, should} from "chai";
 
+should()
 let conn
-import {expect} from "chai";
-import {connection, movieModel, reviewModel, userModel} from "../../src/db.js";
-// import join_dao_tests from './join_dao_tests.js'
 
-export default function () {
+describe('db', function () {
     before(async function () {
         conn = await connection()
         let res
@@ -145,7 +144,6 @@ export default function () {
             const uid = res[0].user.toString()
             uid.should.be.eq(data.user._id)
         });
-        // describe('joins dao', join_dao_tests)
     })
 
-}
+})

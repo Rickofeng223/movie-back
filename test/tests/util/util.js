@@ -1,5 +1,5 @@
 import axios from "axios";
-import {url} from "../../../../src/server.js";
+import {url} from "../../../src/server.js";
 
 
 export const URL = (type, api, id='') => {

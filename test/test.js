@@ -1,9 +1,4 @@
-import db from './tests/db.js'
-import e2e from './tests/endToEnd/test.js'
-import {should} from "chai";
-should()
-describe('tests',function (){
-    describe('api tests',e2e)
-    describe('db',db)
-
-})
+import './tests/api-tests.js'
+import './tests/sessions.js'
+import './tests/db.js'
+import './tests/util/test-util.js'

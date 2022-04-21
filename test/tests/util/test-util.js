@@ -1,6 +1,8 @@
 import {URL} from "./util.js";
 const {url} = URL
-export default function  tests (){
+import {should} from "chai";
+should()
+describe('test-utl',function  tests (){
     const id = 'id3'
 
     it('users get', () => {
@@ -73,5 +75,5 @@ export default function  tests (){
         actual.should.be.eq(`${url}/api/reviews/${id}`)
 
     })
-}
+})
 

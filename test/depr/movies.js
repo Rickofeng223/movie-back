@@ -1,7 +1,7 @@
-import * as data from "../../../fixtures/db/db-data.js";
+import * as data from "../fixtures/db/db-data.js";
 import dummy from "mongoose-dummy";
-import * as db from "../../../../src/db.js";
-import {request} from "../util/util.js";
+import * as db from "../../src/db.js";
+import {request} from "../tests/util/util.js";
 const movies = request('movies')
 
 export default         () => {
