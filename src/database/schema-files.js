@@ -1,21 +1,25 @@
 import mongoose from "mongoose";
 
-const {Schema, model, connect} = mongoose, {Types} = Schema, {ObjectId} = Types
+const {Schema, model} = mongoose, {Types} = Schema, {ObjectId} = Types
 
 export const usersModel = model("User", Schema({
-    username: {type: String, required: true},
-    first_name: {type: String, required: true},
-    last_name: {type: String, required: true},
-    email_id: {type: String},
-    phone_no: {type: String},
-    DOB: {type: Date},
-    role:
-        {
-            type: String,
-            enum: ['NORMAL', 'CRITIC', 'ADMIN'],
+            username: {type: String, required: true},
+            first_name: {type: String, required: true},
+            last_name: {type: String, required: true},
+            email_id: {type: String},
+            phone_no: {type: String},
+            DOB: {type: Date},
+            role:
+                {
+                    type: String,
+                    enum: ['NORMAL', 'CRITIC', 'ADMIN'],
+
+                },
+        }, {
+            collection: 'users'
         }
-    ,
-}, {collection: 'users'} ));
+    ))
+;
 
 export const movieModel = model("Movie", Schema({
     tmdb_id: {type: Number}, //Api
@@ -26,14 +30,15 @@ export const movieModel = model("Movie", Schema({
     poster_path: {type: String}, //Api
     genre_ids: {type: Array},
     vote_average: Number
-}, {collection: 'movies'} ));
+}, {collection: 'movies'}));
 
-export const criticsModel = model("Critic", Schema({
+
+export const criticsModel = model("Critics", Schema({
     user: {type: ObjectId, ref: "User"},
     experience: Number,
     organisation: String,
 
-}, {collection: 'critics'} ));
+}, {collection: 'critics'}));
 
 export const reviewsModel = model("Reviews", Schema({
     movie: {type: ObjectId, ref: "Movie", required: true}, // MovieID   movie being reviewed
@@ -42,7 +47,7 @@ export const reviewsModel = model("Reviews", Schema({
     rating: {type: Number},
     time: {type: Date}, //check if this is right or {timestamps: true}
     visibility: {type: String} // do we need this
-}, {collection: 'reviews'} ));
+}, {collection: 'reviews'}));
 
 export const ratingsModel = model("Ratings", Schema({
     user: {type: ObjectId, ref: "User"},
@@ -51,4 +56,4 @@ export const ratingsModel = model("Ratings", Schema({
     dislikes: {type: Number},
     liked: {type: Boolean},
     disliked: {type: Boolean}
-}, {collection: 'ratings'} ));
+}, {collection: 'ratings'}));
