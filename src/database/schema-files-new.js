@@ -4,7 +4,6 @@ const {Schema, model, connect} = mongoose, {Types} = Schema, {ObjectId} = Types
 
 export const usersModel = model("User", Schema({
     username: {type: String, required: true},
-    password: {type: String, required: true}, // Added this
     first_name: {type: String, required: true},
     last_name: {type: String, required: true},
     email_id: {type: String},
