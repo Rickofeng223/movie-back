@@ -22,9 +22,7 @@ profiles
 */
 
 export const movieModel = model("Movie", Schema({
-
-    imdb_id: {type: Number}, //Api
-
+    
     tmdb_id: {type: Number}, //Api
 
     title: {type: String}, //Api
