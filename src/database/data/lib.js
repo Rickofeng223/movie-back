@@ -1,19 +1,13 @@
 import dummy from "mongoose-dummy";
-import * as db from '../../db.js'
-
+import * as models from './../schema-files.js'
+import {createUser} from "./mock.js";
 
 export const rand = (max) => Math.floor(Math.random() * max);
 
 
-export const createUser = () => {
-    const user = dummy(db.userModel)
-    delete user._id
-    return user
-}
-
 
 export const createReview = (user, movie) => {
-    const review = dummy(db.reviewModel)
+    const review = dummy(models.reviewsModel)
     delete review._id
     delete review.__v
     review.user = user
@@ -22,7 +16,7 @@ export const createReview = (user, movie) => {
 }
 
 
-export const createReviews = (movies) => function (numMovies, range) {
+export const createRandomGetter = (movies) => function (numMovies= rand(40)) {
     const set = new Set()
     while (set.size < numMovies) {
         set.add(rand(movies.length - 1))
@@ -33,7 +27,7 @@ export const createReviews = (movies) => function (numMovies, range) {
 
 export const createUsersInDB = async (users = []) => {
     for (let i = 0; i < 100; i++) {
-        users.push(await db.userModel.create(createUser()))
+        users.push(await models.usersModel.create(createUser("NORMAL")))
     }
     return users
 }
