@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const {Schema, model, connect} = mongoose, {Types} = Schema, {ObjectId} = Types
+const {Schema, model} = mongoose, {Types} = Schema, {ObjectId} = Types
 
 export const usersModel = model("User", Schema({
     username: {type: String, required: true},
@@ -9,12 +9,11 @@ export const usersModel = model("User", Schema({
     email_id: {type: String},
     phone_no: {type: String},
     DOB: {type: Date},
-    role: [
+    role:
         {
             type: String,
             enum: ['NORMAL', 'CRITIC', 'ADMIN'],
         },
-    ],
 }, {collection: 'users'} ));
 
 export const movieModel = model("Movie", Schema({
@@ -28,7 +27,7 @@ export const movieModel = model("Movie", Schema({
     vote_average: Number
 }, {collection: 'movies'} ));
 
-export const criticsModel = model("User", Schema({
+export const criticsModel = model("Critics", Schema({
     user: {type: ObjectId, ref: "User"},
     experience: Number,
     organisation: String,
