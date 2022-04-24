@@ -13,8 +13,8 @@ export const usersModel = model("User", Schema({
                 {
                     type: String,
                     enum: ['NORMAL', 'CRITIC', 'ADMIN'],
-
-                },
+                    required:true
+               },
         }, {
             collection: 'users'
         }
@@ -57,3 +57,14 @@ export const ratingsModel = model("Ratings", Schema({
     liked: {type: Boolean},
     disliked: {type: Boolean}
 }, {collection: 'ratings'}));
+
+export const authModel = model("Auth", Schema({
+
+
+    user: {type: mongoose.Schema.Types.ObjectId, ref: "User"}, // UserID
+
+    username: {type: String, required: true},
+
+    password: {type: String, required: true},
+
+}))

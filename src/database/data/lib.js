@@ -1,5 +1,5 @@
 import dummy from "mongoose-dummy";
-import * as models from './../schema-files.js'
+import * as models from '../../db.js'
 import {createUser} from "./mock.js";
 
 export const rand = (max) => Math.floor(Math.random() * max);

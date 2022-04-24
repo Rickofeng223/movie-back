@@ -1,7 +1,7 @@
 import connection from "../connection.js";
 import './drop.js'
 const conn = await connection()
-import * as models from '../schema-files.js'
+import * as models from '../../db.js'
 import {createRequire} from 'module'
 import authsModel from '../authentication/auth-model.js'
 
