@@ -4,19 +4,21 @@ import * as data from '../fixtures/db/db-data.js'
 import {should} from "chai";
 import app, {url} from "../../src/server.js";
 import dummy from "mongoose-dummy";
-import {request} from "./util/util.js";
 import axios from "axios";
+import {SessionMock} from "../util/session-mock.js";
 
 should()
-const users = request('users')
-const movies = request('movies')
-const reviews = request('reviews')
+let users,movies,reviews
+
 const {get} = axios
 describe ('end-to-end', function tests() {
     before(async () => {
         this. server = await app()
-
-
+        this.mock =  await SessionMock(url)
+        await this.mock.setSession('user',data.user._id)
+        users=this.mock.users
+        movies=this.mock.movies
+        reviews=this.mock.reviews
     })
     after(async () => {
 

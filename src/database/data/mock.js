@@ -3,7 +3,7 @@ import faker from "faker";
 
 console.log(Object.keys(faker))
 
-import * as models from "../schema-files.js";
+import * as models from '../../db.js'
 
 const ignore = ['_id']
 const ignore_crit = [...ignore, 'user']

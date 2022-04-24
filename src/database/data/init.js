@@ -1,14 +1,10 @@
 import {createRequire} from 'module'
-import * as models from '../schema-files.js'
-import{writeFileSync}from 'fs'
-import {createRandomGetter,createUsersInDB}from './lib.js'
-import * as mock from './mock.js'
+import * as models from '../../db.js'
+import {writeFileSync} from 'fs'
+import {createRating, createReview, UserCreator} from './mock.js'
 import './drop.js'
 import connect from '../connection.js'
-import {createRating, createReview, createUser, UserCreator} from "./mock.js";
-import authModel from "../authentication/auth-model.js";
-import faker from "faker";
-import {createAuth} from "../authentication/auth-dao.js";
+
 const conn = await connect()
 const rand = (max) => Math.floor(Math.random() * max);
 const json =(x)=>JSON.stringify(x,null,4)
@@ -34,7 +30,7 @@ const crits = []
 
 
 const [admin,adminAuth] = await createAdmin()
-authModel.updateOne({_id:adminAuth._id}, {username:'root',password:'toor'})
+db.authModel.updateOne({_id:adminAuth._id}, {username:'root',password:'toor'})
 models.usersModel.updateOne({_id:admin._id},{username:'root'})
 auths.push(adminAuth)
 users.admin.push(admin)
@@ -109,7 +105,7 @@ let users = []
 let auths =[]*//*
 for (let i = 0; i < 25; i++) {
 	const user =await models.usersModel.create(createUser("NORMAL"))
-	const auth = await authModel.create({user:user._id,
+	const auth = await .create({user:user._id,
 		username:user.username,
 		password:faker.internet.password()})
 	auths.push(auth)
@@ -124,7 +120,7 @@ let user = createUser("ADMIN"),auth={user:user.username,password:'toor'}
 user.username='root'
 user = await models.usersModel.create(user)
 console.log(user,users.length)
-auth = await authModel.create({
+auth = await .create({
 	user:user._id,
 username:user.username,
 	password:'toor'
