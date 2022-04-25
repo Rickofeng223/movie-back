@@ -1,13 +1,25 @@
 import express from 'express'
 import cors from 'cors'
-import controllers from './controllers/index.js'
 import session from "express-session";
-import sessionController  from "./controllers/sessions/index.js";
-export const url =  `http://localhost:${process.env.PORT || 4000}`
-import {connection} from '../src/db.js'
-const express_app = async ()=> {
-    const conn = await connection()
+import controller from './controllers/controller-routes.js'
+import sessionController from "./controllers/old/sessions/index.js";
 
+export const url = `http://localhost:${process.env.PORT || 4000}`
+import {connection} from '../src/db.js'
+
+
+const express_app = async () => {
+    let conn
+    try {
+        conn = await connection()
+    } catch (e) {
+        throw new Error(`DB CONNECTION ERROR: ${e}`)
+
+    }
+    if (!conn) {
+        throw new Error(`DB CONNECTION ERROR!`)
+    }
+    console.log('connected to db!')
 
     const app = express();
 
@@ -15,8 +27,8 @@ const express_app = async ()=> {
     const sess = {
         resave: false,
         saveUninitialized: true,
-        secret: process.env.SECRET||"secret",
-     /*   cookie: {secure: false}*/
+        secret: process.env.SECRET || "secret",
+        /*   cookie: {secure: false}*/
     };
     if (process.env.ENV === 'production') {
         app.set('trust proxy', 1)
@@ -31,21 +43,14 @@ const express_app = async ()=> {
 
     app.use(express.json())
 
-
-
-    controllers(app)
-
-
-
-
+    controller(app)
 
 
     sessionController(app)
 
     const PORT = process.env.PORT || 4000
-    return {db:conn,app:app.listen(PORT, () => console.log(`listening on port ${PORT}`))};
+    return {db: conn, app: app.listen(PORT, () => console.log(`listening on port ${PORT}`))};
 }
-
 
 
 export default express_app
