@@ -1,11 +1,11 @@
 
 
-function signup(req, res) {
+export function signup(req, res) {
     const newUser = req.body;
     const {username, password, userData} = newUser
 }
 
-function login(req, res) {
+export function login(req, res) {
     const {username, password} = req.body
 
         if (login(username,password)){
@@ -17,12 +17,12 @@ function login(req, res) {
 
 }
 
-function profile(req, res) {
+export function profile(req, res) {
     const profile = (req, res) =>
         res.json(req.session['profile']);
 }
 
-function logout(req, res) {
+export function logout(req, res) {
     req.session.destroy();
 }
 
