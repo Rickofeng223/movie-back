@@ -1,4 +1,4 @@
-import {usersModel} from "../database/schema-files.js";
+import {reviewsModel, usersModel} from "../database/schema-files.js";
 
 export function manyQueries(app) {
 
@@ -109,12 +109,17 @@ export function manyQueries(app) {
             res.status(403).send("Must be logged in!")
             return
         }
-
-res.sendStatus(500)
+        try{
+            const movie = req.params.id
+            const result = await reviewsModel.find({movie})
+            res.json(result)
+        }catch (e){
+            res.status(500).send(e.message)
+        }
     }
     //get reviews
-    app.get('/api/reviews/:id/users', getReviewsFromUserID)
-    app.get('/api/reviews/:id/movies', getReviewsOfMovieFromID)
+    app.get('/api/users/:id/reviews', getReviewsFromUserID)
+    app.get('/api/movies/:id/reviews', getReviewsOfMovieFromID)
 
 
 }

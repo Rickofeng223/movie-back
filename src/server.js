@@ -46,7 +46,7 @@ const express_app = async () => {
     controller(app)
 
 
-    sessionController(app)
+    // sessionController(app)
 
     const PORT = process.env.PORT || 4000
     return {db: conn, app: app.listen(PORT, () => console.log(`listening on port ${PORT}`))};
