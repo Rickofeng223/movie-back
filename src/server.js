@@ -5,18 +5,18 @@ import controller from './controllers/controller-routes.js'
 import sessionController from "./controllers/old/sessions/index.js";
 
 export const url = `http://localhost:${process.env.PORT || 4000}`
-import {connection} from '../src/db.js'
+import {connection, criticsModel, reviewsModel, usersModel} from '../src/db.js'
 
 
 const express_app = async () => {
-    let conn
+    let db
     try {
-        conn = await connection()
+        db = await connection()
     } catch (e) {
         throw new Error(`DB CONNECTION ERROR: ${e}`)
 
     }
-    if (!conn) {
+    if (!db) {
         throw new Error(`DB CONNECTION ERROR!`)
     }
     console.log('connected to db!')
@@ -44,12 +44,14 @@ const express_app = async () => {
     app.use(express.json())
 
     controller(app)
-
-
-    // sessionController(app)
-
     const PORT = process.env.PORT || 4000
-    return {db: conn, app: app.listen(PORT, () => console.log(`listening on port ${PORT}`))};
+    const runningApp = app.listen(PORT, () => console.log(`listening on port ${PORT}`))
+    return {db, app:runningApp,
+        shutDown:async()=>  {
+            await db.disconnect()
+            await runningApp.close()
+        }
+    };
 }
 
 

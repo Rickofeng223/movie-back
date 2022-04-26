@@ -1,9 +1,11 @@
 import {createRequire} from 'module'
 import * as models from '../../db.js'
+import * as db from '../../db.js'
 import {writeFileSync} from 'fs'
 import {createRating, createReview, UserCreator} from './mock.js'
 import './drop.js'
 import connect from '../connection.js'
+import {reviewsModel} from "../../db.js";
 
 const conn = await connect()
 const rand = (max) => Math.floor(Math.random() * max);
@@ -24,7 +26,7 @@ const users = {
 	critic:[],
 	admin:[],
 }
-let numUsers=100,numCritics=8,numReviews = 100,numRatings = 500
+let numUsers=3,numCritics=2,numReviews = 3,numRatings = 7
 const auths = []
 const crits = []
 
@@ -43,12 +45,15 @@ for (let i = 0; i < numUsers ; i++){
 	if (i < numCritics){
 		const [criticUser,auth,crit] =await createCritUser()
 
-	users.critic.push(criticUser)
+		users.critic.push(criticUser)
 		auths.push(auth)
 		crits.push(crit)
 	}
 }
+
 let {normal,critic,admin:admins}=users
+
+
 const allusers=[...normal,...critic,...admins]
 const pick_random =(arr)=> ()=> arr[rand(arr.length-1)]
 
@@ -61,8 +66,14 @@ const randomCritic= pick_random(cids)
 console.log(users.normal.length,users.admin.length,users.critic.length)
 console.log(auths.length)
 console.log(crits.length)
-
+// let review = createReview({user:randomUser(),critic :randomCritic(),movie:randomMovie() })
 let makeReview=()=>models.reviewsModel.create (createReview({user:randomUser(),critic :randomCritic(),movie:randomMovie() }))
+console.log("PAY ATTENTION HERE")
+let x
+console.log(x= await makeReview({user:randomUser(),critic :randomCritic(),movie:randomMovie() }))
+x= await reviewsModel.create(x)
+console.log(x)
+
 let reviews = []
 for (let i = 0; i < numReviews;i++){
 	let review = await makeReview()

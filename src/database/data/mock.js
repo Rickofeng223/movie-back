@@ -71,18 +71,20 @@ const auth = async(role )=>{
     const auth = await ({user:user._id,username:user.username,password:faker.internet.password()})
     return [user,auth]
 }
+
+
 export function UserCreator() {
 
 
     let createNormal =  ()=>  auth(NORMAL)
     let createAdmin = async ()=>auth(ADMIN)
     let createCritUser = async ()=>{
-        const [critic,authz] = await auth(CRITIC)
+        const [criticUser,authz] = await auth(CRITIC)
         const crit =await  models.criticsModel.create({
             ...dummy(models.criticsModel,ignored)
-            ,user:critic._id
+            ,user:criticUser._id
         })
-        return [critic,authz,crit]
+        return [criticUser,authz,crit]
     }
 
     return {createNormal,createAdmin,createCritUser     }

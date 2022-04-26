@@ -7,19 +7,21 @@ import {
     getRating,
     getReview,
     getUser,
-    postRating,
+    getByTid,
+    getMovie,
+   postRating,
     postReview,
     putCritic,
-    putRating,
     putReview,
-    putUser, getByTid, getMovie
-} from './controller-logic-crud.js'
-
+    putRating,
+    putUser} from './crud/index.js'
 import {
-    getSession,getSessionAll, resetSession, setSession
+    getSession, resetSession, setSession
 } from './session-logic.js'
+import signup from "./auth/signup.js";
+import login from "./auth/login.js";
 
-import {signup,logout,login} from './user-crud.js'
+
 
 export default (app) => {
 
@@ -61,14 +63,18 @@ export default (app) => {
 
     app.get('/api/session/set/:name/:value', setSession);
     app.get('/api/session/get/:name', getSession);
-    app.get('/api/session/get', getSessionAll);
+    app.get('/api/session/get/', getSession);
+    // app.get('/api/session/get', getSessionAll);
     app.get('/api/session/reset', resetSession);
 
 
     app.post("/api/auth/signup", signup);
     app.post("/api/auth/login", login);
-    // app.post("/api/auth/profile", profile);
-    app.post("/api/auth/logout", logout);
+     app.post("/api/auth/logout",  function logout(req, res) {
+            req.session.destroy();
+            res.sendStatus(200)
+        }
+    );
 
     manyQueries(app)
     //
