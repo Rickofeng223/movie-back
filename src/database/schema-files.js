@@ -45,6 +45,8 @@ export const reviewsModel = model("Reviews", Schema({
     critic: {type: ObjectId, ref: "Critic"}, // only critics
     content: {type: String},
     rating: {type: Number},
+    likes: {type: Number},
+    dislikes: {type: Number},
     time: {type: Date}, //check if this is right or {timestamps: true}
     visibility: {type: String} // do we need this
 }, {collection: 'reviews'}));
@@ -52,8 +54,7 @@ export const reviewsModel = model("Reviews", Schema({
 export const ratingsModel = model("Ratings", Schema({
     user: {type: ObjectId, ref: "User"},
     review: {type: ObjectId, ref: "Reviews"},
-    likes: {type: Number},
-    dislikes: {type: Number},
+    time: {type: Date}, //check if this is right or {timestamps: true}
     liked: {type: Boolean},
     disliked: {type: Boolean}
 }, {collection: 'ratings'}));
