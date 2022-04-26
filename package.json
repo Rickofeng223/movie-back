@@ -10,7 +10,8 @@
     "test": "mocha test/test.js",
     "db-drop": "node src/database/data/drop.js",
     "db-init": "node src/database/data/init.js",
-    "data-reset": "node src/database/data/reset.js"
+    "data-reset": "node src/database/data/reset.js",
+    "add-drop-tiny-db": "node src/database/data/add-drop-db-tiny.js"
   },
   "author": "",
   "license": "ISC",
