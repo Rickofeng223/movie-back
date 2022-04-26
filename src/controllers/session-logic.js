@@ -6,13 +6,16 @@ export const setSession = (req, res) => {
     res.send(req.session);
 }
 export const getSession = (req, res) => {
-    const name = req.params['name'];
-    const value = req.session[name];
+    if(req.session.name){
+        const name = req.params['name'];
+        const value = req.session[name];
     res.send(value);
+    }else{
+        res.send(req.session)
+    }
+
 }
-export const getSessionAll = (req, res) => {
-    res.send(req.session);
-}
+
 
 export const resetSession = (req, res) => {
     req.session.destroy();

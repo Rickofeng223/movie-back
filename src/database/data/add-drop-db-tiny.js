@@ -85,7 +85,6 @@ users = [
         "__v": 0
     }
 ]
-
 users = await Promise.all(users.map(e => usersModel.create(e)))
 let criticUsers = users.filter(e => e.role === "CRITIC")
 
@@ -117,6 +116,7 @@ auth = [
         "password": "GkYloWEUGWX0MgR"
     }
 ]
+
 auth = await Promise.all(auth.map(e => authModel.create(e)))
 
 await Promise.all(
