@@ -22,6 +22,7 @@ export const usersModel = model("User", Schema({
 ;
 
 export const movieModel = model("Movie", Schema({
+
     tmdb_id: {type: Number}, //Api
     title: {type: String}, //Api
     homepage: {type: String}, //Api
@@ -33,16 +34,17 @@ export const movieModel = model("Movie", Schema({
 }, {collection: 'movies'}));
 
 
-export const criticsModel = model("Critics", Schema({
+export const criticsModel = model("Critic", Schema({
+
     user: {type: ObjectId, ref: "User"},
     experience: Number,
     organisation: String,
 
 }, {collection: 'critics'}));
 
-export const reviewsModel = model("Reviews", Schema({
-    movie: {type: ObjectId, ref: "Movie", required: true}, // MovieID   movie being reviewed
-    critic: {type: ObjectId, ref: "Critic"}, // only critics
+export const reviewsModel = model("Review", Schema({
+    movie: {type: ObjectId, ref: 'Movie', required: true}, // MovieID   movie being reviewed
+    critic: {type: ObjectId, ref: 'Critic'}, // only critics
     content: {type: String},
     rating: {type: Number},
     likes: {type: Number},
@@ -51,9 +53,9 @@ export const reviewsModel = model("Reviews", Schema({
     visibility: {type: String} // do we need this
 }, {collection: 'reviews'}));
 
-export const ratingsModel = model("Ratings", Schema({
-    user: {type: ObjectId, ref: "User"},
-    review: {type: ObjectId, ref: "Reviews"},
+export const ratingsModel = model("Rating", Schema({
+    user: {type: ObjectId, ref: 'User'},
+    review: {type: ObjectId, ref: 'Review'},
     time: {type: Date}, //check if this is right or {timestamps: true}
     liked: {type: Boolean},
     disliked: {type: Boolean}
