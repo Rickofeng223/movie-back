@@ -8,8 +8,10 @@ export default async function login(req, res) {
         if ([test] = await authModel.find({username, password})) {
             let user = await usersModel.findById(test.user)
             req.session.user = user._id
-            res.json(user)
+            console.log("USER: ",user)
 
+            res.json(user)
+            return
         } else {
             res.status(403).send("Bad Login Info")
         }
