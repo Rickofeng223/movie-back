@@ -46,7 +46,7 @@ export default async function signup(req, res) {
         console.log("USER: ",user)
 
         res.json(user)
-
+           return 
     }catch (e) {
 
         res.send(e.toString())
