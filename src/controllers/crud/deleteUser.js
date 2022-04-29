@@ -4,10 +4,10 @@ import {authModel, criticsModel, usersModel} from "../../database/schema-files.j
 import {isAdmin} from "../util.js";
 
 export default async function deleteUser(req, res) {
+
     try{
-        const session = req.session
         const _id = req.params.id;
-        if (session.user === _id || await isAdmin(session.user)) {
+        if (req.query.user === _id || await isAdmin(req.query.user)) {
             const user = usersModel.findById(_id)
             if (user.role === "CRITIC") {
                 await criticsModel.deleteOne({user: _id})
@@ -21,7 +21,7 @@ export default async function deleteUser(req, res) {
             res.sendStatus(403)
         }
     }catch (e){
-
+        console.log(e)
         res.status(500).send(e.message)
     }
 

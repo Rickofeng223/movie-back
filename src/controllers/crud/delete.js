@@ -4,10 +4,9 @@ import {isAdmin} from "../util.js";
 export async function deleteReview(req, res) {
     try {
         const id = req.params.id;
-
-        if ((req.session.user)) {
+        if ((req.query.params.user)) {
             const review = await reviewsModel.findById(id)
-            if (review.user === req.session.user || await isAdmin(req.session.user)) {
+            if (review.user === req.query.params.user || await isAdmin(req.query.params.user)) {
                 await reviewsModel.deleteOne({_id: id})
                 await ratingsModel.deleteMany({review: id})
                 res.sendStatus(200)
@@ -29,7 +28,7 @@ export async function deleteRating(req, res) {
     try {
         const id = req.params.id;
         const rating = await ratingsModel.findById(id)
-        if (rating.user === req.session.user || await isAdmin(req.session.user)) {
+        if (rating.user === req.query.params.user || await isAdmin(req.query.params.user)) {
             await reviewsModel.deleteOne({_id: id})
             res.sendStatus(200)
         } else {

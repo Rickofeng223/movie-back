@@ -6,6 +6,10 @@ export async function isAdmin(_id) {
     return user.role === "ADMIN"
 }
 
-export async function isLoggedIn(req) {
-    return req.session.user && await usersModel.findById(req.session.user);
+export async function isLoggedIn(user) {
+    try {
+        return await usersModel.findById(user) && true;
+    }catch (e){
+        return false
+    }
 }
