@@ -43,7 +43,7 @@ export async function putUser(req, res) {
         }
 
 
-        const user = await updateByID(_id, req.body, usersModel)
+        const user = await updateByID(req.query.user, req.body, usersModel)
         res.json(user)
 
     } catch (e) {
