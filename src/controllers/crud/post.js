@@ -2,7 +2,7 @@ import {criticsModel, ratingsModel, reviewsModel, usersModel} from "../../databa
 
 export async function postRating(req, res) {
     try {
-        const rating = await ratingsModel.create({...req.body, user: req.session.user})
+        const rating = await ratingsModel.create({...req.body.rating, user: req.body.user})
         res.json(rating)
     } catch (e) {
 
@@ -14,16 +14,18 @@ export async function postRating(req, res) {
 
 export async function postReview(req, res) {
     try {
-        if (!req.session.user || await usersModel.findById(req.session.user)) {
+        let __review =req.body.review
+        let __user  =req.body.user
+        if (!__user || await usersModel.findById(__user)) {
             res.status(403).send("must be logged in to post a review")
             return
         }
 
-        const user = await usersModel.findById(req.session.user)
+        const user = await usersModel.findById(__user)
 
         if (user.role === 'CRITIC') {
             const critic = await criticsModel.find({user: user._id})
-            const review = await reviewsModel.create({...req.body, critic})
+            const review = await reviewsModel.create({...__review, critic})
             res.json(review)
             return
         }
