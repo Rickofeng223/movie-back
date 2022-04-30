@@ -30,24 +30,18 @@ const express_app = async () => {
         secret: process.env.SECRET || "secret",
         /*   cookie: {secure: false}*/
     };
-    if (process.env.ENV === 'production') {
-        app.set('trust proxy', 1)
-        sess.cookie.secure = true;
-    }
+
     app.use(session(sess));
-    app.use(cors({
-            credentials: true,
-            // origin: 'http://localhost:4000'
-        }
-    ))
+    app.use(cors())
 
     app.use(express.json())
 
     controller(app)
     const PORT = process.env.PORT || 4000
     const runningApp = app.listen(PORT, () => console.log(`listening on port ${PORT}`))
-    return {db, app:runningApp,
-        shutDown:async()=>  {
+    return {
+        db, app: runningApp,
+        shutDown: async () => {
             await db.disconnect()
             await runningApp.close()
         }

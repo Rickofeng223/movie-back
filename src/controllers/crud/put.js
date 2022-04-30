@@ -21,16 +21,19 @@ export async function putRating(req, res) {
 
         if (user.role || req.body.role === "ADMIN") {
             res.status(403).send("Cannot make yourself an administrator")
-        } else if (req.session.user === _id || await isAdmin(_id)) {
+            return
+        } else if (req.query.user === _id || await isAdmin(_id)) {
             const {_id: rid, ...toUpdate} = req.body
             const user = await updateByID(_id, toUpdate, ratingsModel)
             res.json(user)
         } else {
             res.sendStatus(403)
+            return
         }
     } catch (e) {
 
         res.status(500).send(e.message)
+        return
     }
 
 
@@ -38,14 +41,9 @@ export async function putRating(req, res) {
 
 export async function putUser(req, res) {
     try {
-        if (req.body.role && req.body.role === "ADMIN") {
-            res.status(403).send("Cannot make yourself an administrator")
-        }
-
-
         const user = await updateByID(req.query.user, req.body, usersModel)
         res.json(user)
-
+        return
     } catch (e) {
 
         res.status(500).send(e.message)
@@ -62,10 +60,12 @@ export async function putReview(req, res) {
         if (user === test._id) {
             updateByID(reviewId, postBody, reviewsModel)
             res.sendStatus(200)
+            return
         }
     } catch (e) {
 
         res.status(500).send(e.message)
+        return
     }
 
 }
