@@ -2,8 +2,8 @@ import {isAdmin} from "../util.js";
 import {ratingsModel, reviewsModel, usersModel} from "../../database/schema-files.js";
 
 
-export function getUserById(req) {
-    return usersModel.findById(req.session.user);
+export function getUserById(id) {
+    return usersModel.findById(id);
 }
 
 export function updateByID(_id, toUpdate, model) {
@@ -29,8 +29,7 @@ export async function putRating(req, res) {
             res.sendStatus(403)
         }
     } catch (e) {
-
-        res.status(500).send(e.message)
+         res.status(500).send(e.message)
     }
 
 
@@ -38,9 +37,7 @@ export async function putRating(req, res) {
 
 export async function putUser(req, res) {
     try {
-        if (req.body.role && req.body.role === "ADMIN") {
-            res.status(403).send("Cannot make yourself an administrator")
-        }
+
 
 
         const user = await updateByID(req.query.user, req.body, usersModel)
@@ -48,7 +45,7 @@ export async function putUser(req, res) {
 
     } catch (e) {
 
-        res.status(500).send(e.message)
+         res.status(500).send(e.message)
     }
 
 
@@ -57,13 +54,15 @@ export async function putUser(req, res) {
 
 export async function putReview(req, res) {
     try {
-        let user = req.query.params.user, reviewId = req.query.params.id, postBody = res.body
-        const test = await getUserById(user)
-        if (user === test._id) {
+        let user = req.query.user, reviewId = req.body._id, postBody = res.body
+
+        if (user ) {
             updateByID(reviewId, postBody, reviewsModel)
             res.sendStatus(200)
+            return
         }
     } catch (e) {
+        console.log(e,2)
 
         res.status(500).send(e.message)
     }
@@ -71,7 +70,7 @@ export async function putReview(req, res) {
 }
 
 export async function putCritic(req, res) {
-    console.log(`Update Critic`, req.query.params.user, req.params.id, res.body)
+    console.log(`Update Critic`, req.query.user, req.id, res.body)
     res.send(500)
 
 }
