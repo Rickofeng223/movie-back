@@ -6,18 +6,19 @@ import {criticsModel, ratingsModel, reviewsModel, usersModel} from "../../databa
 
 export async function getUser(req, res) {
 
-    const _id = req.query.user
-    if (await usersModel.findById(_id)) {
-        let response
+    const _id = req.params.id
+    // if (await usersModel.findById(_id)) {
+        let response={'default-value':true}
         if (req.params.id) {
-            response = await usersModel.findById(req.params.id)
+            response = await usersModel.findById(_id)
+            console.log('findby id')
         } else {
             response = await usersModel.find()
         }
         res.json(response)
-    } else {
-        res.status(403).send("must be logged in to see ratings")
-    }
+    // } else {
+    //     res.status(403).send("must be logged in to see ratings")
+    // }
 }
 
 const sortRecent = (a, b) => b.recent - a.recent;
