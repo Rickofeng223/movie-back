@@ -7,7 +7,7 @@ export default async function login(req, res) {
  
         if (test) {
             let user = await usersModel.findById(test.user)
-            req.session.user = user._id.toString()
+            // req.session.user = user._id.toString()
             res.json(user)
             return
 
