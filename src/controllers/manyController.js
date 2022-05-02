@@ -1,4 +1,4 @@
-import {movieModel, ratingsModel, reviewsModel, usersModel} from "../database/schema-files.js";
+import {criticsModel, movieModel, ratingsModel, reviewsModel, usersModel} from "../database/schema-files.js";
 
 export function manyQueries(app) {
 
@@ -18,6 +18,16 @@ export function manyQueries(app) {
                 _id: {$in: moviesIds}
             })
             res.json(movies)
+        }catch (e){
+            res.status(500).send(e.message)
+        }
+    })
+    app.get('/api/users/:id/critics', async (req, res) => {
+
+        try{
+            const user_id = req.params.id // users primary key
+            const critic_id = await criticsModel.findOne({user: user_id},{"_id":1})
+            res.json(critic_id)
         }catch (e){
             res.status(500).send(e.message)
         }

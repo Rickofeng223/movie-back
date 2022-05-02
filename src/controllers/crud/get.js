@@ -29,7 +29,6 @@ const sortingMethods = {
 //         /api/reviews/
 //         /api/reviews/:id
 export async function getReview(req, res) {
-    if (req.query.user) {
         let response
         if (req.params.id) {
             response = await reviewsModel.findById(req.params.id)
@@ -41,9 +40,7 @@ export async function getReview(req, res) {
 
         }
         res.json(response)
-    } else {
-        res.status(403).send("must be logged in to see reviews")
-    }
+
 
 }
 
@@ -51,24 +48,20 @@ export async function getReview(req, res) {
 //         /api/ratings/:id
 export async function getRating(req, res) {
 
-    if (await isLoggedIn(req.query.user)) {
-        let response
+         let response
         if (req.params.id) {
             response = await ratingsModel.findById(req.params.id)
         } else {
             response = await ratingsModel.find()
         }
         res.json(response)
-    } else {
-        res.status(403).send("must be logged in to see ratings")
-    }
 
 }
 
 
 export async function getCritic(req, res) {
     try {
-        if (await isLoggedIn(req.query.user)) {
+
             let response
             if (req.params.id) {
                 response = await criticsModel.findById(req.params.id)
@@ -76,9 +69,7 @@ export async function getCritic(req, res) {
                 response = await criticsModel.find()
             }
             res.json(response)
-        } else {
-            res.status(400).send("must be logged in to view critics")
-        }
+
     } catch (e) {
 
         res.status(500).send(e.message)
