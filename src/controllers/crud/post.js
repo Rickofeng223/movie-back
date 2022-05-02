@@ -13,25 +13,51 @@ export async function postRating(req, res) {
 
 
 export async function postReview(req, res) {
+    let i
+    console.log('params',req.params)
+    console.log('query',req.query)
     try {
-        let __review =req.body.review
-        let __user  =req.body.user
-        if (!__user || await usersModel.findById(__user)) {
-            res.status(403).send("must be logged in to post a review")
+        let __review =req.body
+        let __user  =req.query.user
+        console.log(i++)
+
+        let user
+        try{
+            user = await usersModel.findById(__user)
+            console.log(i++)
+
+        }catch(e){
+           console.log(e)
+            res.sendStatus(503)
             return
         }
-
-        const user = await usersModel.findById(__user)
-
         if (user.role === 'CRITIC') {
-            const critic = await criticsModel.find({user: user._id})
-            const review = await reviewsModel.create({...__review, critic})
-            res.json(review)
-            return
-        }
-        res.status(403).send("Must be a critic to write a review")
-    } catch (e) {
+   try{
+       const critic = await criticsModel.find({user: __user })
+       console.log(critic)
+       try{
+           const review = await reviewsModel.create({...__review, critic:critic._id})
+           res.json(review)
 
+       }catch (e) {
+           console.log(e)
+           res.send(504)
+           return
+       }
+   }catch (e) {
+           console.log(e)
+           res.send(505)
+           return
+
+   }
+
+         }else{
+            res.json({message: "something went wrong", user:__user,__review})
+            return
+
+        }
+     } catch (e) {
+console.log('error:' ,e)
         res.status(500).send(e.message)
     }
 
